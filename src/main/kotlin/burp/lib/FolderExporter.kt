@@ -5,7 +5,7 @@ import java.nio.file.Paths
 
 class FolderExporter(private val root: SourceMapSourceStore.TreeFolder, private val absoluteParentPath: Path) {
     private fun exportFile(file: SourceMapSourceStore.TreeFile, path: Array<String>) {
-        val absPath = absoluteParentPath.resolve(Paths.get("/", *path).normalize().toString().removePrefix("/"))
+        val absPath = absoluteParentPath.resolve(Paths.get(".", *path).normalize().toString().replace('?', '_'))
         val outFile = absPath.toFile()
 
         try {
@@ -20,6 +20,7 @@ class FolderExporter(private val root: SourceMapSourceStore.TreeFolder, private 
                 .removePrefix("http://")
                 .removeSuffix("/")
                 .replace('/', '_')
+                .replace('?', '_')
     }
 
     private fun concatPathStr(path: Array<String>, next: String): Array<String> {
